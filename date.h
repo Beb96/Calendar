@@ -7,14 +7,16 @@
 class Date
 {
 public:
-    Date();
-    ~Date();
 
-    int getHour() const;
-    int getMinute() const;
-    int getSecond() const;
+    virtual int getYear() const = 0;
+    virtual int getMonth() const = 0;
+    virtual int getDay() const = 0;
 
-private:
+    virtual int getHour() const = 0;
+    virtual int getMinute() const = 0;
+    virtual int getSecond() const = 0;
+
+protected:
     time_t date;
     struct tm* getDate = NULL;
     char* readDate = NULL;
