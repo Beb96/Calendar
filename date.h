@@ -10,11 +10,10 @@ public:
 
     virtual int getYear() const = 0;
     virtual int getMonth() const = 0;
-    virtual int getDay() const = 0;
 
-    virtual int getHour() const = 0;
-    virtual int getMinute() const = 0;
-    virtual int getSecond() const = 0;
+    //virtual int getHour() const = 0;
+    //virtual int getMinute() const = 0;
+    //virtual int getSecond() const = 0;
 
 protected:
     time_t date;

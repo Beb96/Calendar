@@ -7,21 +7,39 @@
 class GregorianCalendar : public Date
 {
 public:
-    GregorianCalendar();
-    virtual ~GregorianCalendar();
+    GregorianCalendar() {
+        time(&date);
+        getDate = localtime(&date);
+        readDate = asctime(getDate);
+
+        gregorianYear = getDate->tm_year;
+        gregorianMonth = getDate->tm_mon;
+
+        int maxDay = 31;
+        for (int i = 1; i <= maxDay; i++) {
+            gregorianDay[i] = i;
+        }
+    }
+
+    virtual ~GregorianCalendar() {
+        delete[] gregorianDay;
+    }
 
     virtual int getYear() const;
     virtual int getMonth() const;
-    virtual int getDay() const;
+    virtual int getDay(int pos) const;
 
-    virtual int getHour() const;
-    virtual int getMinute() const;
-    virtual int getSecond() const;
+    virtual void setYear(const int y);
+    virtual void setMonth(const int m);
+
+    //virtual int getHour() const;
+    //virtual int getMinute() const;
+    //virtual int getSecond() const;
 
 private:
-    int year;
-    int month;
-    int* day = new int [31];
+    int gregorianYear;
+    int gregorianMonth;
+    int* gregorianDay = new int [31];
 };
 
 #endif // GREGORIANCALENDAR_H
