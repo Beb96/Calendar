@@ -2,18 +2,15 @@
 #include "ui_mainwindow.h"
 #include <QtGui>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent)
 {
-    ui->setupUi(this);
+    setupUi(this);
     GregorianCalendar();
 
+    connect(pushButton_AddYear, SIGNAL( clicked()), this, SLOT(MoreYear()));
 }
 
 
+void MainWindow::MoreYear() {
 
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
