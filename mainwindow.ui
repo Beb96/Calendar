@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>573</width>
-    <height>412</height>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="lblYear">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>90</y>
+      <x>70</x>
+      <y>50</y>
       <width>61</width>
       <height>31</height>
      </rect>
@@ -55,11 +55,19 @@
    <widget class="QPushButton" name="pushButton_AddYear">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>130</y>
-      <width>31</width>
-      <height>23</height>
+      <x>180</x>
+      <y>90</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>+</string>
@@ -68,10 +76,10 @@
    <widget class="QLCDNumber" name="lcdNumbYear">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>130</y>
-      <width>81</width>
-      <height>23</height>
+      <x>60</x>
+      <y>90</y>
+      <width>101</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="lineWidth">
@@ -85,10 +93,18 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
-      <width>31</width>
-      <height>23</height>
+      <y>90</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>-</string>

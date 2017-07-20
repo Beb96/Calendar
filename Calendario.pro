@@ -21,3 +21,9 @@ HEADERS  += mainwindow.h \
     GregorianCalendar.h
 
 FORMS    += mainwindow.ui
+
+# install
+target.path = mainwindow
+source.files = $$SOURCES $$HEADERS $$RESOURCES $$FORMS *.pro
+sources.path = .
+INSTALLS += target sources

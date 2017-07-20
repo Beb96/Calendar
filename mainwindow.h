@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindowDLG
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
 public slots:
     void MoreYear();
@@ -23,7 +24,7 @@ public slots:
 
 
 private:
-    GregorianCalendar gc;
+    GregorianCalendar* gc;
 };
 
 #endif // MAINWINDOW_H
