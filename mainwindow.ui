@@ -36,8 +36,8 @@
    <widget class="QLabel" name="lblMonth">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>90</y>
+      <x>380</x>
+      <y>50</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -89,7 +89,7 @@
      <number>0</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushBtnLessYear">
+   <widget class="QPushButton" name="pushButton_LessYear">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -113,40 +113,56 @@
    <widget class="QLCDNumber" name="lcdNumbMonth">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>130</y>
+      <x>380</x>
+      <y>90</y>
       <width>81</width>
-      <height>23</height>
+      <height>41</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushBtnPlusMonth">
+   <widget class="QPushButton" name="pushButton_MoreMonth">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>130</y>
-      <width>31</width>
-      <height>23</height>
+      <x>480</x>
+      <y>90</y>
+      <width>51</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>+</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushBtnLessMonth">
+   <widget class="QPushButton" name="pushButton_LessMonth">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>130</y>
-      <width>31</width>
-      <height>23</height>
+      <x>320</x>
+      <y>90</y>
+      <width>41</width>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>-</string>
     </property>
    </widget>
-   <widget class="QListView" name="listViewDay">
+   <widget class="QListView" name="ListView_Day">
     <property name="geometry">
      <rect>
       <x>70</x>

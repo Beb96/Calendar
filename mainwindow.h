@@ -18,9 +18,10 @@ public:
 
 public slots:
     void MoreYear();
-    //void LessYear();
-    //void MoreMonth();
-    //void LessMonth();
+    void LessYear();
+    void MoreMonth();
+    void LessMonth();
+    void ViewDay();
 
 
 private:

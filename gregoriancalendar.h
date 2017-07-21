@@ -27,7 +27,7 @@ public:
 
     virtual int getYear() const;
     virtual int getMonth() const;
-    virtual int getDay(int pos) const;
+    virtual int getDay() const;
 
     virtual void setYear(const int y);
     virtual void setMonth(const int m);
