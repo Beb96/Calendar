@@ -22,7 +22,7 @@ public slots:
     void MoreMonth();
     void LessMonth();
     void ViewDay();
-
+    void ClearView();
 
 private:
     GregorianCalendar* gc;

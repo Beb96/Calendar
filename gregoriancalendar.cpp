@@ -23,6 +23,7 @@ int GregorianCalendar::getDay() const {
         nday = 30;
     else
         nday = 31;
+    return nday;
 }
 
 void GregorianCalendar::setYear(const int y) {
@@ -30,5 +31,22 @@ void GregorianCalendar::setYear(const int y) {
 }
 
 void GregorianCalendar::setMonth(const int m) {
-    gregorianMonth = gregorianMonth + m;
+    if (m > 0) {
+        if (gregorianMonth < 12) {
+            gregorianMonth = gregorianMonth + m;
+        }
+        else {
+            gregorianMonth = 1;
+            setYear(+1);
+        }
+    }
+    else {
+        if (gregorianMonth > 1) {
+            gregorianMonth = gregorianMonth + m;
+        }
+        else {
+            gregorianMonth = 12;
+            setYear(-1);
+        }
+    }
 }

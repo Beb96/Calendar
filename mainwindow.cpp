@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     gc = new GregorianCalendar();
     lcdNumbYear->display(gc->getYear());
     lcdNumbMonth->display(gc->getMonth());
+    ViewDay();
 
     connect(pushButton_AddYear, SIGNAL( clicked()), this, SLOT(MoreYear()));
     connect(pushButton_LessYear, SIGNAL( clicked()), this, SLOT(LessYear()));
@@ -16,33 +17,47 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
-    delete[] gc;
+    delete gc;
 }
 
 
 void MainWindow::MoreYear() {
     gc->setYear(+1);
     lcdNumbYear->display(gc->getYear());
+    ClearView();
+    ViewDay();
 }
 
 void MainWindow::LessYear() {
     gc->setYear(-1);
     lcdNumbYear->display(gc->getYear());
+    ClearView();
+    ViewDay();
 }
 
 void MainWindow::MoreMonth() {
     gc->setMonth(+1);
     lcdNumbMonth->display(gc->getMonth());
-    //ViewDay();
+    lcdNumbYear->display(gc->getYear());
+    ClearView();
+    ViewDay();
 }
 
 void MainWindow::LessMonth() {
     gc->setMonth(-1);
     lcdNumbMonth->display(gc->getMonth());
-    //ViewDay();
+    lcdNumbYear->display(gc->getYear());
+    ClearView();
+    ViewDay();;
 }
 
 void MainWindow::ViewDay() {
     int nday = gc->getDay();
+    for (int i = 1; i <= nday; i++)
+        textEdit_Day->append(QString::number(i));
 
+}
+
+void MainWindow::ClearView() {
+    textEdit_Day->clear();
 }

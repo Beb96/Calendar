@@ -13,17 +13,11 @@ public:
         readDate = asctime(getDate);
 
         gregorianYear = getDate->tm_year;
-        gregorianMonth = getDate->tm_mon;
+        gregorianMonth = getDate->tm_mon + 1;
 
-        int maxDay = 31;
-        for (int i = 1; i <= maxDay; i++) {
-            gregorianDay[i] = i;
-        }
     }
 
-    virtual ~GregorianCalendar() {
-        delete[] gregorianDay;
-    }
+    virtual ~GregorianCalendar() {}
 
     virtual int getYear() const;
     virtual int getMonth() const;
@@ -39,7 +33,6 @@ public:
 private:
     int gregorianYear;
     int gregorianMonth;
-    int* gregorianDay = new int [31];
 };
 
 #endif // GREGORIANCALENDAR_H
