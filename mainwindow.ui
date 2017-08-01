@@ -172,6 +172,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox_Month">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>140</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

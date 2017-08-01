@@ -3,6 +3,8 @@
 
 #include <time.h>
 #include "Date.h"
+#include <vector>
+#include <string>
 
 class GregorianCalendar : public Date
 {
@@ -17,7 +19,7 @@ public:
 
     }
 
-    virtual ~GregorianCalendar() {}
+    virtual ~GregorianCalendar() { delete[] nameMonth; }
 
     virtual int getYear() const;
     virtual int getMonth() const;
@@ -33,6 +35,7 @@ public:
 private:
     int gregorianYear;
     int gregorianMonth;
+    std::string * nameMonth = new std::string[12];
 };
 
 #endif // GREGORIANCALENDAR_H

@@ -14,13 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    GregorianCalendar.cpp \
-    jewishcalendar.cpp
+    GregorianCalendar.cpp
 
 HEADERS  += mainwindow.h \
     Date.h \
-    GregorianCalendar.h \
-    jewishcalendar.h
+    GregorianCalendar.h
 
 FORMS    += mainwindow.ui
 
