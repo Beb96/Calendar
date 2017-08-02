@@ -9,17 +9,17 @@ int GregorianCalendar::getMonth() const {
     return gregorianMonth;
 }
 
-int GregorianCalendar::getDay() const {
-    int month = getMonth();
-    int year = getYear();
+
+
+int GregorianCalendar::getDay(QString month) const {
     int nday = 0;
-    if (month == 2) {
-        if (year%4 == 0)
+    if (month == "February") {
+        if (getYear()%4 == 0)
             nday = 29;
         else
             nday = 28;
     }
-    else if (month == 11 || month == 4 || month == 6 || month == 9)
+    else if (month == "November" || month == "April" || month == "June" || month == "September")
         nday = 30;
     else
         nday = 31;

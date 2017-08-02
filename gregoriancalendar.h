@@ -5,6 +5,7 @@
 #include "Date.h"
 #include <vector>
 #include <string>
+#include <QString>
 
 class GregorianCalendar : public Date
 {
@@ -17,13 +18,26 @@ public:
         gregorianYear = getDate->tm_year;
         gregorianMonth = getDate->tm_mon + 1;
 
+        nameMonth[0] = "Jenuary";
+        nameMonth[1] = "February";
+        nameMonth[2] = "March";
+        nameMonth[3] = "April";
+        nameMonth[4] = "May";
+        nameMonth[5] = "June";
+        nameMonth[6] = "July";
+        nameMonth[7] = "August";
+        nameMonth[8] = "September";
+        nameMonth[9] = "October";
+        nameMonth[10] = "November";
+        nameMonth[11] = "December";
     }
 
     virtual ~GregorianCalendar() { delete[] nameMonth; }
 
     virtual int getYear() const;
     virtual int getMonth() const;
-    virtual int getDay() const;
+    virtual int getDay(QString month) const;
+    //virtual std::string * getNameMonth(int const pos) const;
 
     virtual void setYear(const int y);
     virtual void setMonth(const int m);

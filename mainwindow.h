@@ -4,7 +4,8 @@
 #include "ui_mainwindow.h"
 #include <QMainWindow>
 #include "gregoriancalendar.h"
-
+#include <QString>
+#include <string>
 
 
 

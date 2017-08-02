@@ -8,12 +8,27 @@ MainWindow::MainWindow(QWidget *parent)
     gc = new GregorianCalendar();
     lcdNumbYear->display(gc->getYear());
     lcdNumbMonth->display(gc->getMonth());
-    //ViewDay();
+
+    comboBox_Month->addItem("Jenuary");
+    comboBox_Month->addItem("February");
+    comboBox_Month->addItem("March");
+    comboBox_Month->addItem("April");
+    comboBox_Month->addItem("May");
+    comboBox_Month->addItem("June");
+    comboBox_Month->addItem("July");
+    comboBox_Month->addItem("August");
+    comboBox_Month->addItem("September");
+    comboBox_Month->addItem("October");
+    comboBox_Month->addItem("November");
+    comboBox_Month->addItem("December");
+
+    ViewDay();
 
     connect(pushButton_AddYear, SIGNAL( clicked()), this, SLOT(MoreYear()));
     connect(pushButton_LessYear, SIGNAL( clicked()), this, SLOT(LessYear()));
     connect(pushButton_MoreMonth, SIGNAL( clicked()), this, SLOT(MoreMonth()));
     connect(pushButton_LessMonth, SIGNAL( clicked()), this, SLOT(LessMonth()));
+    connect(comboBox_Month, SIGNAL(clicked()), this, SLOT(ViewDay()));
 }
 
 MainWindow::~MainWindow() {
@@ -51,14 +66,13 @@ void MainWindow::LessMonth() {
     //ViewDay();;
 }
 
-/*void MainWindow::ViewDay() {
-    int nday = gc->getDay();
-    for (int i = 1; i <= nday; i++)
-
+void MainWindow::ViewDay() {
+    int nday = gc->getDay(comboBox_Month->currentText());
+    for (int i = 1; i <= nday; i++) {
         textEdit_Day->append(QString::number(i));
-
+    }
 }
 
 void MainWindow::ClearView() {
     textEdit_Day->clear();
-}*/
+}
