@@ -16,7 +16,7 @@ public:
         readDate = asctime(getDate);
 
         gregorianYear = getDate->tm_year;
-        gregorianMonth = getDate->tm_mon + 1;
+        gregorianMonth = getDate->tm_mon;
 
         nameMonth[0] = "Jenuary";
         nameMonth[1] = "February";

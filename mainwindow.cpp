@@ -22,13 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
     comboBox_Month->addItem("November");
     comboBox_Month->addItem("December");
 
-    ViewDay();
+    comboBox_Month->setCurrentIndex(gc->getMonth());
 
     connect(pushButton_AddYear, SIGNAL( clicked()), this, SLOT(MoreYear()));
     connect(pushButton_LessYear, SIGNAL( clicked()), this, SLOT(LessYear()));
     connect(pushButton_MoreMonth, SIGNAL( clicked()), this, SLOT(MoreMonth()));
     connect(pushButton_LessMonth, SIGNAL( clicked()), this, SLOT(LessMonth()));
-    connect(comboBox_Month, SIGNAL(clicked()), this, SLOT(ViewDay()));
+    connect(comboBox_Month, SIGNAL(currentIndexChanged(int)), this, SLOT(ViewDay()));
+
+    ViewDay();
 }
 
 MainWindow::~MainWindow() {
@@ -39,34 +41,35 @@ MainWindow::~MainWindow() {
 void MainWindow::MoreYear() {
     gc->setYear(+1);
     lcdNumbYear->display(gc->getYear());
-    //ClearView();
-    //ViewDay();
+    ClearView();
+    ViewDay();
 }
 
 void MainWindow::LessYear() {
     gc->setYear(-1);
     lcdNumbYear->display(gc->getYear());
-    //ClearView();
-    //ViewDay();
+    ClearView();
+    ViewDay();
 }
 
 void MainWindow::MoreMonth() {
     gc->setMonth(+1);
     lcdNumbMonth->display(gc->getMonth());
     lcdNumbYear->display(gc->getYear());
-    //ClearView();
-    //ViewDay();
+    ClearView();
+    ViewDay();
 }
 
 void MainWindow::LessMonth() {
     gc->setMonth(-1);
     lcdNumbMonth->display(gc->getMonth());
     lcdNumbYear->display(gc->getYear());
-    //ClearView();
-    //ViewDay();;
+    ClearView();
+    ViewDay();;
 }
 
 void MainWindow::ViewDay() {
+    ClearView();
     int nday = gc->getDay(comboBox_Month->currentText());
     for (int i = 1; i <= nday; i++) {
         textEdit_Day->append(QString::number(i));
