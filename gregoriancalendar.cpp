@@ -5,7 +5,7 @@ int GregorianCalendar::getYear() const {
     return gregorianYear;
 }
 
-int GregorianCalendar::getMonth() const {
+QString GregorianCalendar::getMonth() const {
     return gregorianMonth;
 }
 
@@ -14,7 +14,11 @@ int GregorianCalendar::getMonth() const {
 int GregorianCalendar::getDay(QString month) const {
     int nday = 0;
     if (month == "February") {
-        if (getYear()%4 == 0)
+        if (getYear()%400 == 0)
+            nday = 29;
+        else if (getYear()%100 == 0)
+            nday = 28;
+        else if (getYear()% 4 == 0)
             nday = 29;
         else
             nday = 28;
@@ -27,26 +31,9 @@ int GregorianCalendar::getDay(QString month) const {
 }
 
 void GregorianCalendar::setYear(const int y) {
-    gregorianYear = gregorianYear + y;
+    gregorianYear = y;
 }
 
-void GregorianCalendar::setMonth(const int m) {
-    if (m > 0) {
-        if (gregorianMonth < 12) {
-            gregorianMonth = gregorianMonth + m;
-        }
-        else {
-            gregorianMonth = 1;
-            setYear(+1);
-        }
-    }
-    else {
-        if (gregorianMonth > 1) {
-            gregorianMonth = gregorianMonth + m;
-        }
-        else {
-            gregorianMonth = 12;
-            setYear(-1);
-        }
-    }
+void GregorianCalendar::setMonth(const QString m) {
+    gregorianMonth = m;
 }

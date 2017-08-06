@@ -18,10 +18,6 @@ public:
     ~MainWindow();
 
 public slots:
-    void MoreYear();
-    void LessYear();
-    void MoreMonth();
-    void LessMonth();
     void ViewDay();
     void ClearView();
 

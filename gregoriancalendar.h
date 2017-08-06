@@ -16,31 +16,62 @@ public:
         readDate = asctime(getDate);
 
         gregorianYear = getDate->tm_year;
-        gregorianMonth = getDate->tm_mon;
 
-        nameMonth[0] = "Jenuary";
-        nameMonth[1] = "February";
-        nameMonth[2] = "March";
-        nameMonth[3] = "April";
-        nameMonth[4] = "May";
-        nameMonth[5] = "June";
-        nameMonth[6] = "July";
-        nameMonth[7] = "August";
-        nameMonth[8] = "September";
-        nameMonth[9] = "October";
-        nameMonth[10] = "November";
-        nameMonth[11] = "December";
+        int month = getDate->tm_mon;
+
+        switch (getDate->tm_mon)
+        {
+            case (0):
+                gregorianMonth = "Jenuary";
+
+            case (1):
+                gregorianMonth = "February";
+
+            case (2):
+                gregorianMonth = "March";
+
+            case (3):
+                gregorianMonth = "April";
+
+            case (4):
+                gregorianMonth = "May";
+
+            case (5):
+                gregorianMonth = "June";
+
+            case (6):
+                gregorianMonth = "July";
+
+            case (7):
+                gregorianMonth = "August";
+
+            case (8):
+                gregorianMonth = "September";
+
+            case (9):
+                gregorianMonth = "October";
+
+            case (10):
+                gregorianMonth = "November";
+
+            case (11):
+                gregorianMonth = "December";
+
+            default:
+                gregorianMonth = "";
+        }
+
+
     }
 
-    virtual ~GregorianCalendar() { delete[] nameMonth; }
+    virtual ~GregorianCalendar() { }
 
     virtual int getYear() const;
-    virtual int getMonth() const;
+    virtual QString getMonth() const;
     virtual int getDay(QString month) const;
-    //virtual std::string * getNameMonth(int const pos) const;
 
     virtual void setYear(const int y);
-    virtual void setMonth(const int m);
+    virtual void setMonth(const QString m);
 
     //virtual int getHour() const;
     //virtual int getMinute() const;
@@ -48,8 +79,7 @@ public:
 
 private:
     int gregorianYear;
-    int gregorianMonth;
-    std::string * nameMonth = new std::string[12];
+    QString gregorianMonth;
 };
 
 #endif // GREGORIANCALENDAR_H
