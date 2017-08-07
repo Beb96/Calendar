@@ -18,6 +18,8 @@ public:
     ~MainWindow();
 
 public slots:
+    void ChangeYear();
+    void ChangeMonth();
     void ViewDay();
     void ClearView();
 

@@ -11,9 +11,9 @@ QString GregorianCalendar::getMonth() const {
 
 
 
-int GregorianCalendar::getDay(QString month) const {
+int GregorianCalendar::getDay() const {
     int nday = 0;
-    if (month == "February") {
+    if (gregorianMonth == "February") {
         if (getYear()%400 == 0)
             nday = 29;
         else if (getYear()%100 == 0)
@@ -23,7 +23,7 @@ int GregorianCalendar::getDay(QString month) const {
         else
             nday = 28;
     }
-    else if (month == "November" || month == "April" || month == "June" || month == "September")
+    else if (gregorianMonth == "November" || gregorianMonth == "April" || gregorianMonth == "June" || gregorianMonth == "September")
         nday = 30;
     else
         nday = 31;

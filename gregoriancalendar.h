@@ -15,9 +15,7 @@ public:
         getDate = localtime(&date);
         readDate = asctime(getDate);
 
-        gregorianYear = getDate->tm_year;
-
-        int month = getDate->tm_mon;
+        gregorianYear = getDate->tm_year + 1900;
 
         switch (getDate->tm_mon)
         {
@@ -68,7 +66,7 @@ public:
 
     virtual int getYear() const;
     virtual QString getMonth() const;
-    virtual int getDay(QString month) const;
+    virtual int getDay() const;
 
     virtual void setYear(const int y);
     virtual void setMonth(const QString m);

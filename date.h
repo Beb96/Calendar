@@ -2,6 +2,7 @@
 #define DATE_H
 
 #include <time.h>
+#include <QString>
 
 
 class Date
@@ -9,7 +10,7 @@ class Date
 public:
 
     virtual int getYear() const = 0;
-    virtual int getMonth() const = 0;
+    virtual QString getMonth() const = 0;
 
     //virtual int getHour() const = 0;
     //virtual int getMinute() const = 0;
