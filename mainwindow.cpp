@@ -28,10 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     comboBox_Year->setCurrentText(QString::number(gc->getYear()));
 
+    ViewDay();
+
     connect(comboBox_Month, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeMonth()));
     connect(comboBox_Year, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeYear()));
 
-    ViewDay();
 }
 
 MainWindow::~MainWindow() {

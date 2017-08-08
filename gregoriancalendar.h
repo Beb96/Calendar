@@ -3,7 +3,6 @@
 
 #include <time.h>
 #include "Date.h"
-#include <vector>
 #include <string>
 #include <QString>
 
@@ -21,39 +20,51 @@ public:
         {
             case (0):
                 gregorianMonth = "Jenuary";
+                break;
 
             case (1):
                 gregorianMonth = "February";
+                break;
 
             case (2):
                 gregorianMonth = "March";
+                break;
 
             case (3):
                 gregorianMonth = "April";
+                break;
 
             case (4):
                 gregorianMonth = "May";
+                break;
 
             case (5):
                 gregorianMonth = "June";
+                break;
 
             case (6):
                 gregorianMonth = "July";
+                break;
 
             case (7):
                 gregorianMonth = "August";
+                break;
 
             case (8):
                 gregorianMonth = "September";
+                break;
 
             case (9):
                 gregorianMonth = "October";
+                break;
 
             case (10):
                 gregorianMonth = "November";
+                break;
 
             case (11):
                 gregorianMonth = "December";
+                break;
 
             default:
                 gregorianMonth = "";

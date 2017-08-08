@@ -10,7 +10,6 @@ QString GregorianCalendar::getMonth() const {
 }
 
 
-
 int GregorianCalendar::getDay() const {
     int nday = 0;
     if (gregorianMonth == "February") {
