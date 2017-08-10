@@ -8,13 +8,7 @@
 class Date
 {
 public:
-
-    virtual int getYear() const = 0;
-    virtual QString getMonth() const = 0;
-
-    //virtual int getHour() const = 0;
-    //virtual int getMinute() const = 0;
-    //virtual int getSecond() const = 0;
+    virtual void CurrentDate() = 0;
 
 protected:
     time_t date;

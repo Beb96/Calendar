@@ -10,10 +10,8 @@ class GregorianCalendar : public Date
 {
 public:
     GregorianCalendar() {
-        time(&date);
-        getDate = localtime(&date);
-        readDate = asctime(getDate);
 
+        CurrentDate();
         gregorianYear = getDate->tm_year + 1900;
 
         switch (getDate->tm_mon)
@@ -75,6 +73,8 @@ public:
 
     virtual ~GregorianCalendar() { }
 
+    virtual void CurrentDate() override;
+
     virtual int getYear() const;
     virtual QString getMonth() const;
     virtual int getDay() const;
@@ -82,11 +82,8 @@ public:
     virtual void setYear(const int y);
     virtual void setMonth(const QString m);
 
-    //virtual int getHour() const;
-    //virtual int getMinute() const;
-    //virtual int getSecond() const;
-
 private:
+
     int gregorianYear;
     QString gregorianMonth;
 };

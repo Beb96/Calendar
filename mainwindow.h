@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
+#include "timer.h"
 #include <QMainWindow>
 #include "gregoriancalendar.h"
 #include <QString>
@@ -17,6 +18,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void ViewTime();
+
 public slots:
     void ChangeYear();
     void ChangeMonth();
@@ -25,6 +28,7 @@ public slots:
 
 private:
     GregorianCalendar* gc;
+    Timer * time;
 };
 
 #endif // MAINWINDOW_H

@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
     gc = new GregorianCalendar();
+    time = new Timer();
 
     comboBox_Month->addItem("Jenuary");
     comboBox_Month->addItem("February");
@@ -35,8 +36,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+void MainWindow::ViewTime() {
+
+}
+
 MainWindow::~MainWindow() {
     delete gc;
+    delete time;
 }
 
 void MainWindow::ChangeYear() {

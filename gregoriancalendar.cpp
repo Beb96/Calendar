@@ -1,5 +1,10 @@
 #include "GregorianCalendar.h"
 
+void GregorianCalendar::CurrentDate() {
+    time(&date);
+    getDate = localtime(&date);
+    readDate = asctime(getDate);
+}
 
 int GregorianCalendar::getYear() const {
     return gregorianYear;
