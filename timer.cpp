@@ -20,16 +20,20 @@ int Timer::getMinute() const {
     return minute;
 }
 
+int Timer::getSecond() const {
+    return second;
+}
+
+void Timer::zeroMinute() {
+    minute = 0;
+}
+
 void Timer::setHour() {
-    if (hour == 23)
+    hour ++;
+    if (hour == 24)
         hour = 0;
-    else
-        hour ++;
 }
 
 void Timer::setMinute() {
-    if (minute == 60)
-        minute = 0;
-    else
-        minute ++;
+    minute ++;
 }

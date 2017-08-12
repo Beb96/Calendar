@@ -43,15 +43,21 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::ViewTime() {
+    int init = 0;
     do
     {
         do
         {
-          time->Wait(60);
+          if (init == 1)
+              time->Wait(60);
+          else {
+              time->Wait(60 - time->getSecond());
+              init = 1;
+          }
           time->setMinute();
           lcdNumber_Minutes->display(time->getMinute());
-        } while (time->getMinute() < 59);
-        time->setMinute();
+        } while (time->getMinute() < 60);
+        time->zeroMinute();
         lcdNumber_Minutes->display(time->getMinute());
         time->setHour();
         lcdNumber_Hour->display(time->getHour());
