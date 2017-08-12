@@ -19,3 +19,17 @@ int Timer::getHour() const {
 int Timer::getMinute() const {
     return minute;
 }
+
+void Timer::setHour() {
+    if (hour == 23)
+        hour = 0;
+    else
+        hour ++;
+}
+
+void Timer::setMinute() {
+    if (minute == 60)
+        minute = 0;
+    else
+        minute ++;
+}

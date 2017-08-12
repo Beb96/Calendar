@@ -8,6 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
     gc = new GregorianCalendar();
     time = new Timer();
 
+    lcdNumber_Minutes->display(time->getMinute());
+    lcdNumber_Hour->display(time->getHour());
+
+    tempo = std::thread(&MainWindow::ViewTime, this);
+    //tempo(ViewTime);
+
     comboBox_Month->addItem("Jenuary");
     comboBox_Month->addItem("February");
     comboBox_Month->addItem("March");
@@ -37,10 +43,23 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::ViewTime() {
-
+    do
+    {
+        do
+        {
+          time->Wait(60);
+          time->setMinute();
+          lcdNumber_Minutes->display(time->getMinute());
+        } while (time->getMinute() < 59);
+        time->setMinute();
+        lcdNumber_Minutes->display(time->getMinute());
+        time->setHour();
+        lcdNumber_Hour->display(time->getHour());
+    } while(time->getHour() <= 24);
 }
 
 MainWindow::~MainWindow() {
+    tempo.join();
     delete gc;
     delete time;
 }

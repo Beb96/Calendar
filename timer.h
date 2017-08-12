@@ -14,11 +14,15 @@ public:
         second = getDate->tm_sec;
     }
 
+    virtual ~Timer() { }
+
     virtual void CurrentDate() override;
     void Wait(int const sec);
 
     int getHour() const;
     int getMinute() const;
+    void setHour();
+    void setMinute();
 
 private:
     int hour;

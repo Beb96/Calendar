@@ -7,6 +7,7 @@
 #include "gregoriancalendar.h"
 #include <QString>
 #include <string>
+#include <thread>
 
 
 
@@ -29,6 +30,7 @@ public slots:
 private:
     GregorianCalendar* gc;
     Timer * time;
+    std::thread tempo;
 };
 
 #endif // MAINWINDOW_H
