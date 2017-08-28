@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += widgets testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,11 +14,11 @@ CONFIG += c++11
 TARGET = Calendario
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     GregorianCalendar.cpp \
-    timer.cpp
+    timer.cpp \
+    Test/gregoriancalendartest.cpp
 
 HEADERS  += mainwindow.h \
     Date.h \
@@ -26,8 +27,15 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+
+
+
 # install
 target.path = mainwindow
+target.path = $$[QT_INSTALL_EXAMPLES]/qtestlib/tutorial3
 source.files = $$SOURCES $$HEADERS $$RESOURCES $$FORMS *.pro
 sources.path = .
 INSTALLS += target sources
+
+DISTFILES +=
+
