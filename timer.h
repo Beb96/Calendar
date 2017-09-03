@@ -26,6 +26,9 @@ public:
     void zeroHour();
     void setHour();
     void setMinute();
+    void setHour(int h);
+    void setMinute(int m);
+
 
 private:
     int hour;

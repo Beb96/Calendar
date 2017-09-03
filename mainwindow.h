@@ -20,6 +20,8 @@ public:
     ~MainWindow();
 
     void ViewTime();
+    void CreateListMonth(QComboBox * cb);
+    void CreateListYear(QComboBox * cb);
 
 public slots:
     void ChangeYear();

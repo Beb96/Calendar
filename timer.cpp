@@ -37,3 +37,21 @@ void Timer::setHour() {
 void Timer::setMinute() {
     minute ++;
 }
+
+void Timer::setHour(int h) {
+    if (h >= 24)
+        hour = 0;
+    else
+        hour = h;
+}
+
+void Timer::setMinute(int m) {
+    if (m > 60)
+        minute = 0;
+    else if(m == 60) {
+        minute = 0;
+        setHour();
+    }
+    else
+        minute = m;
+}

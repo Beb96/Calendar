@@ -35,7 +35,10 @@ int GregorianCalendar::getDay() const {
 }
 
 void GregorianCalendar::setYear(const int y) {
-    gregorianYear = y;
+    if (y > 2030)
+        gregorianYear = 2030;
+    else
+        gregorianYear = y;
 }
 
 void GregorianCalendar::setMonth(const QString m) {
