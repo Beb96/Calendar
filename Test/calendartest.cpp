@@ -26,27 +26,27 @@ void CalendarTest::TestInitializeMonth() {
 
     QFETCH(QString, result);
 
-    QCOMPARE(gc.getMonth(), result);
+    QCOMPARE(gc.getCurrentMonth(), result);
 
 }
 
 void CalendarTest::TestSingleMonth() {
     GregorianCalendar gc;
 
-    QCOMPARE(gc.getMonth(), QString("September"));
+    QCOMPARE(gc.getCurrentMonth(), QString("September"));
 
-    gc.setMonth("March");
-    QCOMPARE(gc.getMonth(), QString("March"));
+    gc.setCurrentMonth("March");
+    QCOMPARE(gc.getCurrentMonth(), QString("March"));
 }
 
 void CalendarTest::TestYear() {
 
     GregorianCalendar gc;
 
-    QCOMPARE(gc.getYear(), 2017);
+    QCOMPARE(gc.getCurrentYear(), 2017);
 
-    gc.setYear(2022);
-    QCOMPARE(gc.getYear(), 2022);
+    gc.setCurrentYear(2022);
+    QCOMPARE(gc.getCurrentYear(), 2022);
 
 }
 
@@ -72,16 +72,16 @@ void CalendarTest::TestSingleDay() {
 
     QCOMPARE(gc.getDay(), 30);
 
-    gc.setMonth("August");
+    gc.setCurrentMonth("August");
     QCOMPARE(gc.getDay(), 31);
 
-    gc.setMonth("June");
+    gc.setCurrentMonth("June");
     QCOMPARE(gc.getDay(), 30);
 
-    gc.setMonth("February");
+    gc.setCurrentMonth("February");
     QCOMPARE(gc.getDay(), 28);
 
-    gc.setYear(2016);
+    gc.setCurrentYear(2016);
     QCOMPARE(gc.getDay(), 29);
 
 }
@@ -89,7 +89,7 @@ void CalendarTest::TestSingleDay() {
 void CalendarTest::TestSingleHour() {
     Timer time;
 
-    QCOMPARE(time.getHour(), 18);
+    QCOMPARE(time.getHour(), 11);
 
     time.setHour(23);
     QCOMPARE(time.getHour(), 23);
@@ -104,8 +104,6 @@ void CalendarTest::TestSingleHour() {
 void CalendarTest::TestSingleMinute() {
     Timer time;
 
-    //QCOMPARE(time.getMinute(), 11);
-
     time.setMinute(63);
     QCOMPARE(time.getMinute(), 0);
 
@@ -116,11 +114,11 @@ void CalendarTest::TestSingleMinute() {
 void CalendarTest::TestHourMinute() {
     Timer time;
 
-    QCOMPARE(time.getHour(), 18);
+    QCOMPARE(time.getHour(), 11);
     time.setMinute(59);
 
     time.setMinute();
-    QCOMPARE(time.getHour(), 19);
+    QCOMPARE(time.getHour(), 12);
     QCOMPARE(time.getMinute(), 0);
 
 }

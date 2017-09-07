@@ -28,6 +28,4 @@ private slots:
 
 };
 
-//QTEST_MAIN(CalendarTest)
-
 #endif // CALENDARTEST_H

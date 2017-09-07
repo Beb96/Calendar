@@ -24,10 +24,6 @@ int Timer::getSecond() const {
     return second;
 }
 
-void Timer::zeroMinute() {
-    minute = 0;
-}
-
 void Timer::setHour() {
     hour ++;
     if (hour == 24)
@@ -35,7 +31,12 @@ void Timer::setHour() {
 }
 
 void Timer::setMinute() {
-    minute ++;
+    if (minute == 59) {
+        minute = 0;
+        setHour();
+    }
+    else
+        minute ++;
 }
 
 void Timer::setHour(int h) {

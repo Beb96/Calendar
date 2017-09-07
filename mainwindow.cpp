@@ -12,16 +12,24 @@ MainWindow::MainWindow(QWidget *parent)
     lcdNumber_Hour->display(time->getHour());
 
     tempo = std::thread(&MainWindow::ViewTime, this);
-    //tempo(ViewTime);
 
 
     CreateListMonth(comboBox_Month);
 
-    comboBox_Month->setCurrentText(gc->getMonth());
+    comboBox_Month->setCurrentText(gc->getCurrentMonth());
 
     CreateListYear(comboBox_Year);
 
-    comboBox_Year->setCurrentText(QString::number(gc->getYear()));
+    comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear()));
+
+    tableWidget_Day->setRowCount(6);
+    tableWidget_Day->verticalHeader()->setVisible(false);
+    tableWidget_Day->setColumnCount(7);
+    tableWidget_Day->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    QStringList days_week;
+    days_week << "Lunedì" << "Martedì" << "Mercoledì" << "Giovedì" << "Venerdì" << "Sabato" << "Domenica";
+    tableWidget_Day->setHorizontalHeaderLabels(days_week);
 
     ViewDay();
 
@@ -32,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::ViewTime() {
     int init = 0;
+    int zero_minute = 0;
     do
     {
         do
@@ -43,12 +52,13 @@ void MainWindow::ViewTime() {
               init = 1;
           }
           time->setMinute();
+          if (time->getMinute() == 0)
+              zero_minute = 1;
           lcdNumber_Minutes->display(time->getMinute());
-        } while (time->getMinute() < 60);
-        time->zeroMinute();
+        } while (zero_minute == 0);
         lcdNumber_Minutes->display(time->getMinute());
-        time->setHour();
         lcdNumber_Hour->display(time->getHour());
+        zero_minute = 0;
     } while(time->getHour() <= 24);
 }
 
@@ -59,44 +69,53 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::ChangeYear() {
-    gc->setYear(comboBox_Year->currentText().split(" ")[0].toInt());
+    gc->setCurrentYear(comboBox_Year->currentText().split(" ")[0].toInt());
     ViewDay();
 }
 
 void MainWindow::ChangeMonth() {
-    gc->setMonth(comboBox_Month->currentText());
+    gc->setCurrentMonth(comboBox_Month->currentText());
     ViewDay();
 }
 
 void MainWindow::ViewDay() {
+
     ClearView();
+
     int nday = gc->getDay();
-    for (int i = 1; i <= nday; i++) {
-        textEdit_Day->append(QString::number(i));
+
+    int day_week = gc->getDayWeek(comboBox_Month->currentIndex(), gc->getCurrentYear(), comboBox_Year->currentIndex());
+    int day = 1;
+    int maxday_week = 7;
+    for (int i = 0; i < tableWidget_Day->rowCount(); i++) {
+        for (int j = day_week; j < maxday_week; j++) {
+            if (day <= nday) {
+                tableWidget_Day->setItem(i, j, new QTableWidgetItem(QString::number(day)));
+                day ++;
+            }
+            else {
+                break;
+            }
+        }
+        if (day_week != 0)
+            day_week = 0;
     }
 }
 
 void MainWindow::ClearView() {
-    textEdit_Day->clear();
+    tableWidget_Day->clearContents();
 }
 
 void MainWindow::CreateListMonth(QComboBox * cb) {
-    cb->addItem("Jenuary");
-    cb->addItem("February");
-    cb->addItem("March");
-    cb->addItem("April");
-    cb->addItem("May");
-    cb->addItem("June");
-    cb->addItem("July");
-    cb->addItem("August");
-    cb->addItem("September");
-    cb->addItem("October");
-    cb->addItem("November");
-    cb->addItem("December");
+
+    int n_month = 12;
+    for (int i = 0; i < n_month; i++)
+        cb->addItem(gc->getMonth(i));
+
 }
 
 void MainWindow::CreateListYear(QComboBox *cb) {
-    for (int i = 1900; i <= 2030; i++) {
-        cb->addItem(QString::number(i));
+    for (int i = 0; i < gc->getSizeListYear(); i++) {
+        cb->addItem(QString::number(gc->getYear(i)));
     }
 }

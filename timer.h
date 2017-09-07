@@ -22,7 +22,6 @@ public:
     int getHour() const;
     int getMinute() const;
     int getSecond() const;
-    void zeroMinute();
     void zeroHour();
     void setHour();
     void setMinute();

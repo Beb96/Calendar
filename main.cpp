@@ -3,7 +3,7 @@
 #include <QtTest/QtTest>
 #include <Test/calendartest.h>
 
-/*
+
 int main(int argc, char *argv[])
 {
 
@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
     w->show();
 
     return app.exec();
-}*/
+}
 
-QTEST_MAIN(CalendarTest)
+//QTEST_MAIN(CalendarTest)
+
+

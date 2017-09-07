@@ -30,6 +30,7 @@ public slots:
     void ClearView();
 
 private:
+    int table_rows;
     GregorianCalendar* gc;
     Timer * time;
     std::thread tempo;

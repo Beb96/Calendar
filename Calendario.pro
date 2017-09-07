@@ -33,7 +33,6 @@ FORMS    += mainwindow.ui
 
 # install
 target.path = mainwindow
-target.path = $$[QT_INSTALL_EXAMPLES]/qtestlib/tutorial3
 source.files = $$SOURCES $$HEADERS $$RESOURCES $$FORMS *.pro
 sources.path = .
 
