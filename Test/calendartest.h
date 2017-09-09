@@ -6,20 +6,22 @@
 #include "timer.h"
 #include <string>
 #include "mainwindow.h"
+#include <stdexcept>
+#include <iostream>
+#include "calendarexception.h"
 
 class CalendarTest : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void TestInitializeMonth_data();
-    void TestInitializeMonth();
-    void TestSingleMonth();
 
+    void TestCurrentYear();
     void TestYear();
 
-    void TestInitializeDay_data();
-    void TestInitializeDay();
+    void TestCurrentMonth();
+    void TestMonth();
+
     void TestSingleDay();
 
     void TestSingleHour();

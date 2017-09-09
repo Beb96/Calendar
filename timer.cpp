@@ -6,28 +6,27 @@ void Timer::CurrentDate() {
     readDate = asctime(getDate);
 }
 
-void Timer::Wait(int const sec) {
-    clock_t endwait;
-    endwait = clock() + sec * CLK_TCK;
-    while ( clock() < endwait);
-}
-
 int Timer::getHour() const {
     return hour;
-}
-
-int Timer::getMinute() const {
-    return minute;
-}
-
-int Timer::getSecond() const {
-    return second;
 }
 
 void Timer::setHour() {
     hour ++;
     if (hour == 24)
         hour = 0;
+}
+
+void Timer::setHour(int h) throw (CalendarException){
+    if (h > 24)
+        throw CalendarException("Errore. Non esiste l'ora indicata ");
+    else if (h == 24)
+        hour = 0;
+    else
+        hour = h;
+}
+
+int Timer::getMinute() const {
+    return minute;
 }
 
 void Timer::setMinute() {
@@ -39,20 +38,23 @@ void Timer::setMinute() {
         minute ++;
 }
 
-void Timer::setHour(int h) {
-    if (h >= 24)
-        hour = 0;
-    else
-        hour = h;
-}
-
-void Timer::setMinute(int m) {
+void Timer::setMinute(int m) throw (CalendarException){
     if (m > 60)
-        minute = 0;
+        throw CalendarException("Errore. Non esiste il minuto indicato ");
     else if(m == 60) {
         minute = 0;
         setHour();
     }
     else
         minute = m;
+}
+
+int Timer::getSecond() const {
+    return second;
+}
+
+void Timer::Wait(int const sec) {
+    clock_t endwait;
+    endwait = clock() + sec * CLK_TCK;
+    while ( clock() < endwait);
 }

@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtGui>
+#include <stdexcept>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
     gc = new GregorianCalendar();
+
     time = new Timer();
 
     lcdNumber_Minutes->display(time->getMinute());
@@ -38,6 +41,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+MainWindow::~MainWindow() {
+    tempo.join();
+    delete gc;
+    delete time;
+}
+
 void MainWindow::ViewTime() {
     int init = 0;
     int zero_minute = 0;
@@ -62,20 +71,45 @@ void MainWindow::ViewTime() {
     } while(time->getHour() <= 24);
 }
 
-MainWindow::~MainWindow() {
-    tempo.join();
-    delete gc;
-    delete time;
+void MainWindow::CreateListMonth(QComboBox * cb) {
+
+    int n_month = 12;
+    for (int i = 0; i < n_month; i++) {
+        try {
+            cb->addItem(gc->getMonth(i));
+        }
+        catch (std::out_of_range& err) {
+            std::cerr << err.what() << std::endl;
+        }
+        catch (...) {
+            std::cerr << "Errore. Non e' possibile inizializzare la lista dei mesi. " << std::endl;
+        }
+    }
 }
 
-void MainWindow::ChangeYear() {
-    gc->setCurrentYear(comboBox_Year->currentText().split(" ")[0].toInt());
-    ViewDay();
-}
+void MainWindow::CreateListYear(QComboBox *cb) {
+    int size;
+    try {
+        size = gc->getSizeListYear();
+    }
+    catch (CalendarException& err) {
+        err.print_error();
+    }
+    catch (...) {
+        std::cerr << "Errore. La lista degli anni non e' stata inizializzata " << std::endl;
+    }
 
-void MainWindow::ChangeMonth() {
-    gc->setCurrentMonth(comboBox_Month->currentText());
-    ViewDay();
+    for (int i = 0; i < size; i++) {
+        try {
+            cb->addItem(QString::number(gc->getYear(i)));
+        }
+        catch (std::out_of_range& err){
+            std::cerr << err.what() << std::endl;
+        }
+        catch (...) {
+            std::cerr << "Errore nella creazione della lista per gli anni " << std::endl;
+        }
+    }
 }
 
 void MainWindow::ViewDay() {
@@ -106,16 +140,30 @@ void MainWindow::ClearView() {
     tableWidget_Day->clearContents();
 }
 
-void MainWindow::CreateListMonth(QComboBox * cb) {
+void MainWindow::ChangeYear() {
+    try {
+        gc->setCurrentYear(comboBox_Year->currentText().split(" ")[0].toInt());
+    }
+    catch (std::out_of_range& err) {
+        std::cerr << err.what() << std::endl;
+    }
+    catch (...) {
+        std::cerr << "Errore, selezionato anno fuori dalla lista " << std::endl;
+    }
 
-    int n_month = 12;
-    for (int i = 0; i < n_month; i++)
-        cb->addItem(gc->getMonth(i));
-
+    ViewDay();
 }
 
-void MainWindow::CreateListYear(QComboBox *cb) {
-    for (int i = 0; i < gc->getSizeListYear(); i++) {
-        cb->addItem(QString::number(gc->getYear(i)));
+void MainWindow::ChangeMonth() {
+    try {
+        gc->setCurrentMonth(comboBox_Month->currentText());
     }
+    catch (std::out_of_range& err) {
+        std::cerr << err.what() << std::endl;
+    }
+    catch (...) {
+        std::cerr << "Errore, selezionato mese fuori dalla lista " << std::endl;
+    }
+
+    ViewDay();
 }

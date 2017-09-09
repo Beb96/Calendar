@@ -1,124 +1,120 @@
 #include "calendartest.h"
 
 
-void CalendarTest::TestInitializeMonth_data() {
-    QTest::addColumn<QString>("month");
-    QTest::addColumn<QString>("result");
+void CalendarTest::TestCurrentYear() {
 
-    QTest::newRow("January") << "January" << "January";
-    QTest::newRow("February") << "February" << "February";
-    QTest::newRow("March") << "March" << "March";
-    QTest::newRow("April") << "April" << "April";
-    QTest::newRow("May") << "May" << "May";
-    QTest::newRow("June") << "June" << "June";
-    QTest::newRow("July") << "July" << "July";
-    QTest::newRow("August") << "August" << "August";
-    QTest::newRow("September") << "September" << "September";
-    QTest::newRow("October") << "October" << "October";
-    QTest::newRow("November") << "November" << "November";
-    QTest::newRow("December") << "December" << "December";
+    GregorianCalendar * gc = new GregorianCalendar();
 
-}
+    QCOMPARE(gc->getCurrentYear(), 2017);
 
-void CalendarTest::TestInitializeMonth() {
+    gc->setCurrentYear(2015);
+    QCOMPARE(gc->getCurrentYear(), 2015);
 
-    GregorianCalendar gc;
+    QVERIFY_EXCEPTION_THROWN(gc->setCurrentYear(2022), std::out_of_range);
 
-    QFETCH(QString, result);
-
-    QCOMPARE(gc.getCurrentMonth(), result);
-
-}
-
-void CalendarTest::TestSingleMonth() {
-    GregorianCalendar gc;
-
-    QCOMPARE(gc.getCurrentMonth(), QString("September"));
-
-    gc.setCurrentMonth("March");
-    QCOMPARE(gc.getCurrentMonth(), QString("March"));
+    delete gc;
 }
 
 void CalendarTest::TestYear() {
 
-    GregorianCalendar gc;
+    GregorianCalendar * gc = new GregorianCalendar();
 
-    QCOMPARE(gc.getCurrentYear(), 2017);
+    QCOMPARE(gc->getSizeListYear(), 11);
+    QCOMPARE(gc->getFirstYear(), 2010);
+    QCOMPARE(gc->getLastYear(), 2020);
 
-    gc.setCurrentYear(2022);
-    QCOMPARE(gc.getCurrentYear(), 2022);
+    QCOMPARE(gc->getYear(2), 2012);
+
+    QVERIFY_EXCEPTION_THROWN(gc->getYear(20), std::out_of_range);
+
+    delete gc;
 
 }
 
-void CalendarTest::TestInitializeDay_data() {
-    QTest::addColumn<int>("number day");
-    QTest::addColumn<int>("result");
 
-    QTest::newRow("28 days") << 28 << 28;
-    QTest::newRow("30 days") << 30 << 30;
-    QTest::newRow("31 days") << 31 << 31;
+void CalendarTest::TestCurrentMonth() {
+    GregorianCalendar * gc = new GregorianCalendar();
+
+    QCOMPARE(gc->getCurrentMonth(), QString("Settembre"));
+
+    gc->setCurrentMonth("Giugno");
+    QCOMPARE(gc->getCurrentMonth(), QString("Giugno"));
+
+    QVERIFY_EXCEPTION_THROWN(gc->setCurrentMonth(QString("Errore")), CalendarException);
+
+    delete gc;
 }
 
-void CalendarTest::TestInitializeDay() {
-    GregorianCalendar gc;
+void CalendarTest::TestMonth() {
 
-    QFETCH(int, result);
-    QCOMPARE(gc.getDay(), result);
+    GregorianCalendar * gc = new GregorianCalendar();
+
+    QCOMPARE(gc->getMonth(2), QString("Marzo"));
+    QCOMPARE(gc->getMonth(0), QString("Gennaio"));
+    QCOMPARE(gc->getMonth(11), QString("Dicembre"));
+
+    QVERIFY_EXCEPTION_THROWN(gc->getMonth(12), std::out_of_range);
+
+    delete gc;
 }
 
 void CalendarTest::TestSingleDay() {
 
-    GregorianCalendar gc;
+    GregorianCalendar * gc = new GregorianCalendar();
 
-    QCOMPARE(gc.getDay(), 30);
+    QCOMPARE(gc->getDay(), 30);
 
-    gc.setCurrentMonth("August");
-    QCOMPARE(gc.getDay(), 31);
+    gc->setCurrentMonth("Agosto");
+    QCOMPARE(gc->getDay(), 31);
 
-    gc.setCurrentMonth("June");
-    QCOMPARE(gc.getDay(), 30);
+    gc->setCurrentMonth("Giugno");
+    QCOMPARE(gc->getDay(), 30);
 
-    gc.setCurrentMonth("February");
-    QCOMPARE(gc.getDay(), 28);
+    gc->setCurrentMonth("Febbraio");
+    QCOMPARE(gc->getDay(), 28);
 
-    gc.setCurrentYear(2016);
-    QCOMPARE(gc.getDay(), 29);
+    gc->setCurrentYear(2016);
+    QCOMPARE(gc->getDay(), 29);
 
+    delete gc;
 }
 
 void CalendarTest::TestSingleHour() {
-    Timer time;
+    Timer * time = new Timer();
 
-    QCOMPARE(time.getHour(), 11);
+    QCOMPARE(time->getHour(), 9);
 
-    time.setHour(23);
-    QCOMPARE(time.getHour(), 23);
+    time->setHour(23);
+    QCOMPARE(time->getHour(), 23);
 
-    time.setHour(26);
-    QCOMPARE(time.getHour(), 0);
+    QVERIFY_EXCEPTION_THROWN(time->setHour(26), CalendarException);
 
-    time.setHour(24);
-    QCOMPARE(time.getHour(), 0);
+    time->setHour(24);
+    QCOMPARE(time->getHour(), 0);
+
+    delete time;
 }
 
 void CalendarTest::TestSingleMinute() {
-    Timer time;
+    Timer * time = new Timer();
 
-    time.setMinute(63);
-    QCOMPARE(time.getMinute(), 0);
+    QVERIFY_EXCEPTION_THROWN(time->setMinute(63), CalendarException);
 
-    time.setMinute(59);
-    QCOMPARE(time.getMinute(), 59);
+    time->setMinute(59);
+    QCOMPARE(time->getMinute(), 59);
+
+    delete time;
 }
 
 void CalendarTest::TestHourMinute() {
-    Timer time;
+    Timer * time = new Timer();
 
-    QCOMPARE(time.getHour(), 11);
-    time.setMinute(59);
+    QCOMPARE(time->getHour(), 10);
+    time->setMinute(59);
 
-    time.setMinute();
-    QCOMPARE(time.getHour(), 12);
-    QCOMPARE(time.getMinute(), 0);
+    time->setMinute();
+    QCOMPARE(time->getHour(), 11);
+    QCOMPARE(time->getMinute(), 0);
 
+    delete time;
 }

@@ -2,6 +2,7 @@
 #define TIMER_H
 
 #include "Date.h"
+#include "calendarexception.h"
 
 
 class Timer : public Date
@@ -17,17 +18,17 @@ public:
     virtual ~Timer() { }
 
     virtual void CurrentDate() override;
-    void Wait(int const sec);
 
     int getHour() const;
-    int getMinute() const;
-    int getSecond() const;
-    void zeroHour();
     void setHour();
-    void setMinute();
-    void setHour(int h);
-    void setMinute(int m);
+    void setHour(int h) throw(CalendarException);
 
+    int getMinute() const;
+    void setMinute();
+    void setMinute(int m) throw(CalendarException);
+
+    int getSecond() const;
+    void Wait(int const sec);
 
 private:
     int hour;

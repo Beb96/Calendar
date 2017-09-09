@@ -6,20 +6,40 @@ void GregorianCalendar::CurrentDate() {
     readDate = asctime(getDate);
 }
 
-int GregorianCalendar::getCurrentYear() const {
-    return current_year;
-}
-
-int GregorianCalendar::getYear(const int i) const {
+int GregorianCalendar::getYear(const int i) const throw(std::out_of_range) {
+    if (i < 0 || i > getSizeListYear())
+        throw std::out_of_range("Indice errato per la selezione dell'anno ");
     QString y = list_year.at(i).toLocal8Bit().constData();
     return y.split(" ")[0].toInt();
 }
 
-int GregorianCalendar::getSizeListYear() const {
+int GregorianCalendar::getSizeListYear() const throw (CalendarException) {
+    if (list_year.size() < 0)
+        throw CalendarException("Errore! La lista non è stata inizializzata ");
     return list_year.size();
 }
 
-QString GregorianCalendar::getMonth(const int i) const {
+int GregorianCalendar::getCurrentYear() const {
+    return current_year;
+}
+
+void GregorianCalendar::setCurrentYear(const int y) throw (std::out_of_range){
+    if (y < first_year || y > last_year)
+        throw std::out_of_range("Errore. Inserimento anno fuori dal range ");
+    current_year = y;
+}
+
+int GregorianCalendar::getFirstYear() const {
+    return first_year;
+}
+
+int GregorianCalendar::getLastYear() const {
+    return last_year;
+}
+
+QString GregorianCalendar::getMonth(const int i) const throw(std::out_of_range) {
+    if (i < 0 || i > 11)
+        throw std::out_of_range("Indice errato per la selezione del mese");
     return list_month.at(i).toLocal8Bit().constData();
 }
 
@@ -27,18 +47,21 @@ QString GregorianCalendar::getCurrentMonth() const {
     return current_month;
 }
 
-void GregorianCalendar::setCurrentMonth(const QString m) {
+void GregorianCalendar::setCurrentMonth(const QString m) throw (CalendarException){
+    bool result = false;
+    for (int i = 0; i < 12; i++) {
+        if(m == list_month.at(i).toLocal8Bit().constData())
+            result = true;
+    }
+    if (!result)
+        throw CalendarException("Errore! Inserimento mese insesistente");
     current_month = m;
-}
-
-void GregorianCalendar::setCurrentYear(const int y) {
-    current_year = y;
 }
 
 
 int GregorianCalendar::getDay() const {
     int nday = 0;
-    if (current_month == "Febbraio") {
+    if (getCurrentMonth() == "Febbraio") {
         if (getCurrentYear()%400 == 0)
             nday = 29;
         else if (getCurrentYear()%100 == 0)
@@ -48,7 +71,7 @@ int GregorianCalendar::getDay() const {
         else
             nday = 28;
     }
-    else if (current_month == "Novembre" || current_month == "Aprile" || current_month == "Giugno" || current_month == "Settembre")
+    else if (getCurrentMonth() == "Novembre" || getCurrentMonth() == "Aprile" || getCurrentMonth() == "Giugno" || getCurrentMonth() == "Settembre")
         nday = 30;
     else
         nday = 31;
@@ -57,16 +80,28 @@ int GregorianCalendar::getDay() const {
 
 int GregorianCalendar::getDay(const int i_month, const int i_year) const {
     int nday = 0;
-    QString m = list_month.at(i_month).toLocal8Bit().constData();
+    QString m;
+    try {
+        m = getMonth(i_month);
+    }
+    catch (std::out_of_range err) {
+        std::cerr << err.what() << std::endl;
+    }
+
     if (m == "Febbraio") {
-        if (getYear(i_year)%400 == 0)
-            nday = 29;
-        else if (getYear(i_year)%100 == 0)
-            nday = 28;
-        else if (getYear(i_year)% 4 == 0)
-            nday = 29;
-        else
-            nday = 28;
+        try {
+            if (getYear(i_year)%400 == 0)
+                nday = 29;
+            else if (getYear(i_year)%100 == 0)
+                nday = 28;
+            else if (getYear(i_year)% 4 == 0)
+                nday = 29;
+            else
+                nday = 28;
+        }
+        catch (std::out_of_range err) {
+            std::cerr << err.what() << std::endl;
+        }
     }
     else if (m == "Novembre" || m == "Aprile" || m == "Giugno" || m == "Settembre")
         nday = 30;

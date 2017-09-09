@@ -8,6 +8,8 @@
 #include <QString>
 #include <string>
 #include <thread>
+#include "calendarexception.h"
+#include <stdexcept>
 
 
 
@@ -22,12 +24,12 @@ public:
     void ViewTime();
     void CreateListMonth(QComboBox * cb);
     void CreateListYear(QComboBox * cb);
+    void ViewDay();
+    void ClearView();
 
 public slots:
     void ChangeYear();
     void ChangeMonth();
-    void ViewDay();
-    void ClearView();
 
 private:
     int table_rows;

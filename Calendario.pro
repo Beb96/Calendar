@@ -24,7 +24,8 @@ HEADERS  += mainwindow.h \
     Date.h \
     GregorianCalendar.h \
     timer.h \
-    Test/calendartest.h
+    Test/calendartest.h \
+    calendarexception.h
 
 FORMS    += mainwindow.ui
 
@@ -39,4 +40,3 @@ sources.path = .
 INSTALLS += target sources
 
 DISTFILES +=
-

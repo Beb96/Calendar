@@ -6,6 +6,8 @@
 #include <string>
 #include <QString>
 #include <QStringList>
+#include "calendarexception.h"
+#include <stdexcept>
 
 class GregorianCalendar : public Date
 {
@@ -13,12 +15,10 @@ public:
     GregorianCalendar() {
 
         CurrentDate();
-
         list_month << "Gennaio" << "Febbraio" << "Marzo" << "Aprile" << "Maggio" << "Giugno" << "Luglio" << "Agosto"
-                           << "Settembre" << "Ottobre" << "Novembre" << "Dicembre";
+                   << "Settembre" << "Ottobre" << "Novembre" << "Dicembre";
 
         current_month = list_month.at(getDate->tm_mon).toLocal8Bit().constData();
-
 
         int count_year = first_year;
         for (int i = 0; i <= last_year - first_year; i++) {
@@ -32,32 +32,32 @@ public:
 
     virtual ~GregorianCalendar() { }
 
-    virtual void CurrentDate() override;
+    virtual void CurrentDate() override ;
 
+    int getYear(const int i) const throw(std::out_of_range);
+    int getSizeListYear() const throw (CalendarException);
     int getCurrentYear() const;
-    int getYear(const int i) const;
-    int getSizeListYear() const;
+    void setCurrentYear(const int y) throw(std::out_of_range);
 
+    int getFirstYear() const;
+    int getLastYear() const;
+
+    QString getMonth(const int i) const throw(std::out_of_range);
     QString getCurrentMonth() const;
-    QString getMonth(const int i) const;
+    void setCurrentMonth(const QString m) throw(CalendarException);
 
-    int getDay(const int i_month, const int i_year) const;
     int getDay() const;
+    int getDay(const int i_month, const int i_year) const;
     int getDayWeek(const int i_month, int year, int i_year) const;
-
-    void setYear(const int y);
-    void setCurrentYear(const int y);
-    void setCurrentMonth(const QString m);
 
 private:
 
-    int current_year = 0;
-    int first_year = 1900;
-    int last_year = 2030;
+    int current_year;
+    int first_year = 2010;
+    int last_year = 2020;
     QStringList list_year;
-
     QStringList list_month;
-    QString current_month = "";
+    QString current_month;
 };
 
 #endif // GREGORIANCALENDAR_H
