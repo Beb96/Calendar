@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     CreateListYear(comboBox_Year);
 
+    lcdNumber_firstYear->display(gc->getFirstYear());
+    lcdNumber_LastYear->display(gc->getLastYear());
+
     comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear()));
 
     tableWidget_Day->setRowCount(6);
@@ -38,7 +41,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(comboBox_Month, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeMonth()));
     connect(comboBox_Year, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeYear()));
-
+    connect(pushButton_IncreaseFirstYear, SIGNAL(clicked()), this, SLOT(IncreaseFirstYear()));
+    connect(pushButton_DecrementFirstYear, SIGNAL(clicked()), this, SLOT(DecrementFirstYear()));
+    connect(pushButton_IncreaseLastYear, SIGNAL(clicked()), this, SLOT(IncreaseLastYear()));
+    connect(pushButton_DecrementLastYear, SIGNAL(clicked()), this, SLOT(DecrementLastYear()));
 }
 
 MainWindow::~MainWindow() {
@@ -72,44 +78,55 @@ void MainWindow::ViewTime() {
 }
 
 void MainWindow::CreateListMonth(QComboBox * cb) {
-
-    int n_month = 12;
-    for (int i = 0; i < n_month; i++) {
-        try {
-            cb->addItem(gc->getMonth(i));
-        }
-        catch (std::out_of_range& err) {
-            std::cerr << err.what() << std::endl;
-        }
-        catch (...) {
-            std::cerr << "Errore. Non e' possibile inizializzare la lista dei mesi. " << std::endl;
-        }
-    }
+    cb->addItems(gc->getListMonth());
 }
 
 void MainWindow::CreateListYear(QComboBox *cb) {
-    int size;
+    cb->addItems(gc->getListYear());
+}
+
+void MainWindow::IncreaseFirstYear() {
+    comboBox_Year->removeItem(0);
+    gc->setFirstYear(1);
     try {
-        size = gc->getSizeListYear();
+        gc->RemoveFirstElementListYear();
     }
     catch (CalendarException& err) {
         err.print_error();
     }
-    catch (...) {
-        std::cerr << "Errore. La lista degli anni non e' stata inizializzata " << std::endl;
-    }
+    lcdNumber_firstYear->display(gc->getFirstYear());
+    ButtonEnable();
+}
 
-    for (int i = 0; i < size; i++) {
-        try {
-            cb->addItem(QString::number(gc->getYear(i)));
-        }
-        catch (std::out_of_range& err){
-            std::cerr << err.what() << std::endl;
-        }
-        catch (...) {
-            std::cerr << "Errore nella creazione della lista per gli anni " << std::endl;
-        }
+void MainWindow::DecrementFirstYear() {
+    gc->setFirstYear(-1);
+    gc->AddElementHeadListYear();
+    comboBox_Year->insertItem(0,QString::number(gc->getFirstYear()));
+    lcdNumber_firstYear->display(gc->getFirstYear());
+    ButtonEnable();
+}
+
+void MainWindow::IncreaseLastYear() {
+    gc->setLastYear(1);
+    gc->AddElementTailListYear();
+    comboBox_Year->addItem(QString::number(gc->getYear(gc->getSizeListYear() - 1)));
+    lcdNumber_LastYear->display(gc->getLastYear());
+    comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear()));
+    ButtonEnable();
+}
+
+void MainWindow::DecrementLastYear() {
+    int index = comboBox_Year->count() - 1;
+    comboBox_Year->removeItem(index);
+    gc->setLastYear(-1);
+    try {
+        gc->RemoveLastElementListYear();
     }
+    catch (CalendarException& err) {
+        err.print_error();
+    }
+    ButtonEnable();
+    lcdNumber_LastYear->display(gc->getLastYear());
 }
 
 void MainWindow::ViewDay() {
@@ -166,4 +183,23 @@ void MainWindow::ChangeMonth() {
     }
 
     ViewDay();
+}
+
+void MainWindow::ButtonEnable() {
+    if (gc->getFirstYear() == gc->getLastYear()) {
+       pushButton_IncreaseFirstYear->setEnabled(false);
+       pushButton_DecrementLastYear->setEnabled(false);
+    }
+    else {
+        pushButton_IncreaseFirstYear->setEnabled(true);
+        pushButton_DecrementLastYear->setEnabled(true);
+    }
+    if (gc->getFirstYear() == gc->getLastYear()) {
+       pushButton_IncreaseFirstYear->setEnabled(false);
+       pushButton_DecrementLastYear->setEnabled(false);
+    }
+    else {
+        pushButton_IncreaseFirstYear->setEnabled(true);
+        pushButton_DecrementLastYear->setEnabled(true);
+    }
 }

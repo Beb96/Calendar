@@ -26,8 +26,13 @@ public:
     void CreateListYear(QComboBox * cb);
     void ViewDay();
     void ClearView();
+    void ButtonEnable();
 
 public slots:
+    void IncreaseFirstYear();
+    void DecrementFirstYear();
+    void IncreaseLastYear();
+    void DecrementLastYear();
     void ChangeYear();
     void ChangeMonth();
 

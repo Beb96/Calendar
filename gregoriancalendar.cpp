@@ -6,6 +6,10 @@ void GregorianCalendar::CurrentDate() {
     readDate = asctime(getDate);
 }
 
+QStringList GregorianCalendar::getListYear() const {
+    return list_year;
+}
+
 int GregorianCalendar::getYear(const int i) const throw(std::out_of_range) {
     if (i < 0 || i > getSizeListYear())
         throw std::out_of_range("Indice errato per la selezione dell'anno ");
@@ -17,6 +21,27 @@ int GregorianCalendar::getSizeListYear() const throw (CalendarException) {
     if (list_year.size() < 0)
         throw CalendarException("Errore! La lista non è stata inizializzata ");
     return list_year.size();
+}
+
+void GregorianCalendar::RemoveFirstElementListYear() throw (CalendarException){
+    if (list_year.isEmpty())
+        throw CalendarException("La lista degli anni e' vuota. Non e' possibile rimuovere alcun elemento ");
+    list_year.removeFirst();
+}
+
+void GregorianCalendar::RemoveLastElementListYear() throw (CalendarException) {
+    if (list_year.isEmpty())
+        throw CalendarException("La lista degli anni e' vuota. Non e' possibile rimuovere alcun elemento ");
+    list_year.removeLast();
+}
+
+void GregorianCalendar::AddElementHeadListYear() {
+    list_year.append(QString::number(getLastYear()));
+    list_year.sort();
+}
+
+void GregorianCalendar::AddElementTailListYear() {
+    list_year.append(QString::number(getLastYear()));
 }
 
 int GregorianCalendar::getCurrentYear() const {
@@ -33,8 +58,24 @@ int GregorianCalendar::getFirstYear() const {
     return first_year;
 }
 
+void GregorianCalendar::setFirstYear(const int y) throw(CalendarException) {
+    first_year = first_year + y;
+    if (getLastYear() < getFirstYear())
+        throw CalendarException("Errore. L'anno iniziale non può essere minore dell'anno finale ");
+}
+
 int GregorianCalendar::getLastYear() const {
     return last_year;
+}
+
+void GregorianCalendar::setLastYear(const int y) throw(CalendarException) {
+    last_year = last_year + y;
+    if (getLastYear() < getFirstYear())
+        throw CalendarException("Errore. L'anno iniziale non può essere minore dell'anno finale ");
+}
+
+QStringList GregorianCalendar::getListMonth() const {
+    return list_month;
 }
 
 QString GregorianCalendar::getMonth(const int i) const throw(std::out_of_range) {
