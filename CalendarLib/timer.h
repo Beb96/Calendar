@@ -2,14 +2,14 @@
 #define TIMER_H
 
 #include "Date.h"
-#include "calendarexception.h"
+#include "calendarexception.h" // classe per la gestione delle eccezioni
 
 
 class Timer : public Date
 {
 public:
     Timer() {
-        CurrentDate(); // Metodo che permette di ottenere i valori dell'ora, minuti e secondi
+        CurrentDate();
         hour = getDate->tm_hour;
         minute = getDate->tm_min;
         second = getDate->tm_sec;
@@ -17,7 +17,7 @@ public:
 
     virtual ~Timer() { }
 
-    virtual void CurrentDate() override;
+    virtual void CurrentDate() override; // Metodo che permette di ottenere i valori dell'ora, minuti e secondi
 
     // Metodo che ritorna il valore dell'ora attuale
     int getHour() const;

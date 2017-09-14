@@ -1,10 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QtGui>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent) :
+QMainWindow(parent),
+ui(new Ui::MainWindow)
 {
-    setupUi(this);
+    ui->setupUi(this);
     // Inizializzazione del puntatore alla classe GregorianCalendar
     try {
         gc = new GregorianCalendar();
@@ -30,47 +31,48 @@ MainWindow::MainWindow(QWidget *parent)
         err.print_error();
     }
 
-    lcdNumber_Minutes->display(time->getMinute()); //Mostra a display l'ora
-    lcdNumber_Hour->display(time->getHour()); // Mostra a display i minuti
+    ui->lcdNumber_Minutes->display(time->getMinute()); //Mostra a display l'ora
+    ui->lcdNumber_Hour->display(time->getHour()); // Mostra a display i minuti
 
     tempo = std::thread(&MainWindow::ViewTime, this); //lancio del thread per lo scorrere del tempo
 
-    comboBox_Month->addItems(gc->getListMonth()); // Crea la lista dei mesi sulla comboBox
+    ui->comboBox_Month->addItems(gc->getListMonth()); // Crea la lista dei mesi sulla comboBox
 
-    comboBox_Month->setCurrentText(gc->getCurrentMonth()); //Imposta come mese iniziale all'apertura del programma
+    ui->comboBox_Month->setCurrentText(gc->getCurrentMonth()); //Imposta come mese iniziale all'apertura del programma
                                                            // il mese attuale
-    comboBox_Year->addItems(gc->getListYear()); // Crea la lista degli anni sulla comboBox
+    ui->comboBox_Year->addItems(gc->getListYear()); // Crea la lista degli anni sulla comboBox
 
-    lcdNumber_firstYear->display(gc->getFirstYear()); //Mostra a display l'anno più piccola della lista
-    lcdNumber_LastYear->display(gc->getLastYear()); //Mostra a display l'anno più grande della lista
+    ui->lcdNumber_firstYear->display(gc->getFirstYear()); //Mostra a display l'anno più piccola della lista
+    ui->lcdNumber_LastYear->display(gc->getLastYear()); //Mostra a display l'anno più grande della lista
 
-    comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear())); //Imposta come anno iniziale all'
+    ui->comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear())); //Imposta come anno iniziale all'
                                                 //apertura del programma l'anno attuale
 
     // Costruzione della tabella per la visualizzazione dei giorni
-    tableWidget_Day->setRowCount(6);
-    tableWidget_Day->verticalHeader()->setVisible(false);
-    tableWidget_Day->setColumnCount(7);
-    tableWidget_Day->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget_Day->setRowCount(6);
+    ui->tableWidget_Day->verticalHeader()->setVisible(false);
+    ui->tableWidget_Day->setColumnCount(7);
+    ui->tableWidget_Day->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QStringList days_week;
     days_week << "Lunedì" << "Martedì" << "Mercoledì" << "Giovedì" << "Venerdì" << "Sabato" << "Domenica";
-    tableWidget_Day->setHorizontalHeaderLabels(days_week);
+    ui->tableWidget_Day->setHorizontalHeaderLabels(days_week);
 
     // Visualizzazione dei giorni del mese e anno attuale
     ViewDay();
 
     //Connessione dei vari QObject ai relativi metodi
-    connect(comboBox_Month, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeMonth()));
-    connect(comboBox_Year, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeYear()));
-    connect(pushButton_IncreaseFirstYear, SIGNAL(clicked()), this, SLOT(IncreaseFirstYear()));
-    connect(pushButton_DecrementFirstYear, SIGNAL(clicked()), this, SLOT(DecrementFirstYear()));
-    connect(pushButton_IncreaseLastYear, SIGNAL(clicked()), this, SLOT(IncreaseLastYear()));
-    connect(pushButton_DecrementLastYear, SIGNAL(clicked()), this, SLOT(DecrementLastYear()));
+    connect(ui->comboBox_Month, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeMonth()));
+    connect(ui->comboBox_Year, SIGNAL(currentIndexChanged(int)), this, SLOT(ChangeYear()));
+    connect(ui->pushButton_IncreaseFirstYear, SIGNAL(clicked()), this, SLOT(IncreaseFirstYear()));
+    connect(ui->pushButton_DecrementFirstYear, SIGNAL(clicked()), this, SLOT(DecrementFirstYear()));
+    connect(ui->pushButton_IncreaseLastYear, SIGNAL(clicked()), this, SLOT(IncreaseLastYear()));
+    connect(ui->pushButton_DecrementLastYear, SIGNAL(clicked()), this, SLOT(DecrementLastYear()));
 }
 
-// Distruttore per la classe MainWindow
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
+    delete ui;
     tempo.join();
     delete gc;
     delete time;
@@ -93,10 +95,10 @@ void MainWindow::ViewTime() {
           time->setMinute();
           if (time->getMinute() == 0)
               zero_minute = 1;
-          lcdNumber_Minutes->display(time->getMinute());
+          ui->lcdNumber_Minutes->display(time->getMinute());
         } while (zero_minute == 0);
-        lcdNumber_Minutes->display(time->getMinute());
-        lcdNumber_Hour->display(time->getHour());
+        ui->lcdNumber_Minutes->display(time->getMinute());
+        ui->lcdNumber_Hour->display(time->getHour());
         zero_minute = 0;
     } while(time->getHour() <= 24);
 }
@@ -108,13 +110,13 @@ void MainWindow::ViewDay() {
 
     int nday = gc->getDay();
 
-    int day_week = gc->getDayWeek(comboBox_Month->currentIndex(), gc->getCurrentYear(), comboBox_Year->currentIndex());
+    int day_week = gc->getDayWeek(ui->comboBox_Month->currentIndex(), gc->getCurrentYear(), ui->comboBox_Year->currentIndex());
     int day = 1;
     int maxday_week = 7;
-    for (int i = 0; i < tableWidget_Day->rowCount(); i++) {
+    for (int i = 0; i < ui->tableWidget_Day->rowCount(); i++) {
         for (int j = day_week; j < maxday_week; j++) {
             if (day <= nday) {
-                tableWidget_Day->setItem(i, j, new QTableWidgetItem(QString::number(day)));
+                ui->tableWidget_Day->setItem(i, j, new QTableWidgetItem(QString::number(day)));
                 day ++;
             }
             else {
@@ -128,7 +130,7 @@ void MainWindow::ViewDay() {
 
 // Metodo per cancellare gli elementi dalla TableWidget
 void MainWindow::ClearView() {
-    tableWidget_Day->clearContents();
+    ui->tableWidget_Day->clearContents();
 }
 
 /* Metodo che permette di abilitare o disabilitare i bottoni per l'incremento dell'anno iniziale e per il
@@ -138,20 +140,20 @@ decremento dell'anno finale. Funziona che:
 */
 void MainWindow::ButtonEnable() {
     if (gc->getFirstYear() == gc->getLastYear()) {
-       pushButton_IncreaseFirstYear->setEnabled(false);
-       pushButton_DecrementLastYear->setEnabled(false);
+       ui->pushButton_IncreaseFirstYear->setEnabled(false);
+       ui->pushButton_DecrementLastYear->setEnabled(false);
     }
     else {
-        pushButton_IncreaseFirstYear->setEnabled(true);
-        pushButton_DecrementLastYear->setEnabled(true);
+        ui->pushButton_IncreaseFirstYear->setEnabled(true);
+        ui->pushButton_DecrementLastYear->setEnabled(true);
     }
     if (gc->getFirstYear() == gc->getLastYear()) {
-       pushButton_IncreaseFirstYear->setEnabled(false);
-       pushButton_DecrementLastYear->setEnabled(false);
+       ui->pushButton_IncreaseFirstYear->setEnabled(false);
+       ui->pushButton_DecrementLastYear->setEnabled(false);
     }
     else {
-        pushButton_IncreaseFirstYear->setEnabled(true);
-        pushButton_DecrementLastYear->setEnabled(true);
+        ui->pushButton_IncreaseFirstYear->setEnabled(true);
+        ui->pushButton_DecrementLastYear->setEnabled(true);
     }
 }
 
@@ -161,9 +163,9 @@ void MainWindow::ButtonEnable() {
  * Si effettua la chiamata della visualizzazione dei giorni a causa della variazione degli indici
 */
 void MainWindow::IncreaseFirstYear() {
-    comboBox_Year->removeItem(0);
+    ui->comboBox_Year->removeItem(0);
     gc->setFirstYear(1);
-    lcdNumber_firstYear->display(gc->getFirstYear());
+    ui->lcdNumber_firstYear->display(gc->getFirstYear());
     ViewDay();
     ButtonEnable();
 }
@@ -175,8 +177,8 @@ void MainWindow::IncreaseFirstYear() {
 void MainWindow::DecrementFirstYear() {
     gc->setFirstYear(-1);
     gc->AddElementHeadListYear();
-    comboBox_Year->insertItem(0,QString::number(gc->getFirstYear()));
-    lcdNumber_firstYear->display(gc->getFirstYear());
+    ui->comboBox_Year->insertItem(0,QString::number(gc->getFirstYear()));
+    ui->lcdNumber_firstYear->display(gc->getFirstYear());
     ViewDay();
     ButtonEnable();
 }
@@ -187,9 +189,9 @@ void MainWindow::DecrementFirstYear() {
 void MainWindow::IncreaseLastYear() {
     gc->setLastYear(1);
     gc->AddElementTailListYear();
-    comboBox_Year->addItem(QString::number(gc->getYear(gc->getSizeListYear() - 1)));
-    lcdNumber_LastYear->display(gc->getLastYear());
-    comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear()));
+    ui->comboBox_Year->addItem(QString::number(gc->getYear(gc->getSizeListYear() - 1)));
+    ui->lcdNumber_LastYear->display(gc->getLastYear());
+    ui->comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear()));
     ViewDay();
     ButtonEnable();
 }
@@ -199,10 +201,10 @@ void MainWindow::IncreaseLastYear() {
  * Si effettua di nuovo la chiamata della visualizzazione dei giorni a causa della variazione degli indici
  */
 void MainWindow::DecrementLastYear() {
-    int index = comboBox_Year->count() - 1;
-    comboBox_Year->removeItem(index);
+    int index = ui->comboBox_Year->count() - 1;
+    ui->comboBox_Year->removeItem(index);
     gc->setLastYear(-1);
-    lcdNumber_LastYear->display(gc->getLastYear());
+    ui->lcdNumber_LastYear->display(gc->getLastYear());
     ViewDay();
     ButtonEnable();
 }
@@ -212,7 +214,7 @@ void MainWindow::DecrementLastYear() {
  */
 void MainWindow::ChangeYear() {
     try {
-        gc->setCurrentYear(comboBox_Year->currentText().split(" ")[0].toInt());
+        gc->setCurrentYear(ui->comboBox_Year->currentText().split(" ")[0].toInt());
     }
     catch (std::out_of_range& err) {
         std::cerr << err.what() << std::endl;
@@ -229,7 +231,7 @@ void MainWindow::ChangeYear() {
  */
 void MainWindow::ChangeMonth() {
     try {
-        gc->setCurrentMonth(comboBox_Month->currentText());
+        gc->setCurrentMonth(ui->comboBox_Month->currentText());
     }
     catch (std::out_of_range& err) {
         std::cerr << err.what() << std::endl;

@@ -1,22 +1,21 @@
-#ifndef CALENDARTEST_H
-#define CALENDARTEST_H
+#ifndef CALENDARAPPLICATIONTEST_H
+#define CALENDARAPPLICATIONTEST_H
 
-#include <QtTest> // Libreria che permette di eseguire lo unit testing
-#include <string>
-#include <stdexcept> // Libreria che permette la gestione delle eccezioni all'interno del programma
-#include <iostream> // Libreria che permette di stampare a video il messaggio di errore una volta catturata
-                    // l'eccezione
+#include <QObject>
+#include <QtTest/QtTest> // libreria per la gestione dell'unit testing
+#include <stdexcept> // libreria per la gestione delle eccezioni
 
-#include "GregorianCalendar.h" // Classe per la gestione del calendario gregoriano
-#include "timer.h" // classe per la gestione del cronometro
-#include "calendarexception.h" // classe per la gestione di alcune eccezioni
+#include "gregoriancalendar.h" // classe per la gestione delle eccezioni
+#include "timer.h" // classe per la gestione del tempo
+#include "calendarexception.h" // classe per la gestione del calendario
 
-class CalendarTest : public QObject
+class CalendarApplicationTest : public QObject
 {
     Q_OBJECT
+public:
+    explicit CalendarApplicationTest(QObject * parent = 0);
 
 private slots:
-
     void TestCurrentYear(); // Metodo per effettuare test sull'anno corrente
     void TestYear(); // Metodo per effettuare test sulla lista degli anni
     void TestBeginListYear(); // Metodo per effettuare test sulle operazioni in testa alla lista
@@ -26,11 +25,11 @@ private slots:
     void TestMonth(); // Metodo per effettuare test sulla lista dei mesi
 
     void TestSingleDay(); // Metodo per effettuare test sul numero dei giorni in un mese
+    void TestDayWeek(); // Metodo per effettuare test sul giorno della settimana in cui inizia il mese
 
     void TestSingleHour(); // Metodo per effettuare test sull'ora
     void TestSingleMinute(); // Metodo per effettuare test sui minuti
     void TestHourMinute(); // Metodo per effettuare test per l'interazione tra minuti ed ora
-
 };
 
-#endif // CALENDARTEST_H
+#endif // CALENDARAPPLICATIONTEST_H

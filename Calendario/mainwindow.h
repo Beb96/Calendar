@@ -8,20 +8,22 @@
 #include <stdexcept> // libreria per la cattura di alcune eccezioni
 #include <iostream> // libreria per stampare il messaggio di errore catturato dalle eccezioni
 
-#include "ui_mainwindow.h"
+
 #include "timer.h" // classe per la gestione del tempo
 #include "gregoriancalendar.h" // Classe per la gestione del calendario gregoriano
 #include "calendarexception.h" // Classe per la cattura di alcuni tipi di eccezioni
 
+namespace Ui {
+class MainWindow;
+}
 
-
-class MainWindow : public QMainWindow, private Ui::MainWindowDLG
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow(); //distruttore della classe MainWindow
+    ~MainWindow();
 
     void ViewTime(); //Metodo per la visualizzazione del tempo
     void ViewDay(); //Metodo per la visualizzazione dei giorni nel tableWidget
@@ -37,7 +39,9 @@ public slots:
     void ChangeYear(); //Metodo per la selezione dell'anno dalla lista nella comboBox
     void ChangeMonth(); //Metodo per la selezione del mese dalla lista nella comboBox
 
+
 private:
+    Ui::MainWindow *ui;
     GregorianCalendar* gc;
     Timer * time;
     std::thread tempo; // variabile per il lancio del thread riguardante la visualizzazione dell'ora e dei minuti

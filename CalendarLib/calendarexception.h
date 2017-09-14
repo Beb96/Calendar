@@ -1,8 +1,7 @@
 #ifndef CALENDAREXCEPTION_H
 #define CALENDAREXCEPTION_H
 
-#include <stdexcept>
-#include <iostream>
+#include <iostream> // libreria per la visualizzazione del messaggio di errore sul display
 #include <string>
 
 class CalendarException
@@ -14,7 +13,7 @@ public:
     }
 
 private:
-    std::string error_message;
+    std::string error_message; // variabile contenente il messaggio di errore
 };
 
 #endif // CALENDAREXCEPTION_H
