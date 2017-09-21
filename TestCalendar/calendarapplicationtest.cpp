@@ -4,6 +4,7 @@ CalendarApplicationTest::CalendarApplicationTest(QObject * parent) : QObject(par
 {
 }
 
+
 // Metodo per effettuare test sulle operazioni dell'anno corrente
 void CalendarApplicationTest::TestCurrentYear() {
 

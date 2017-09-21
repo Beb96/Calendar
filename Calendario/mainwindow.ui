@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>50</y>
+      <y>140</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -46,7 +46,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>40</y>
+      <y>130</y>
       <width>47</width>
       <height>61</height>
      </rect>
@@ -284,7 +284,7 @@
     <property name="geometry">
      <rect>
       <x>460</x>
-      <y>20</y>
+      <y>110</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -308,7 +308,7 @@
     <property name="geometry">
      <rect>
       <x>600</x>
-      <y>20</y>
+      <y>110</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -332,10 +332,31 @@
     <property name="geometry">
      <rect>
       <x>600</x>
-      <y>50</y>
+      <y>140</y>
       <width>91</width>
       <height>41</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Close">
+    <property name="geometry">
+     <rect>
+      <x>619</x>
+      <y>0</y>
+      <width>91</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Chiudi</string>
     </property>
    </widget>
   </widget>

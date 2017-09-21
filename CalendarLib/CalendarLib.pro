@@ -13,13 +13,15 @@ CONFIG += c++11
 
 SOURCES += \
             gregoriancalendar.cpp \
-            timer.cpp
+            timer.cpp \
+    threadtime.cpp
 
 HEADERS += \
             gregoriancalendar.h \
             timer.h \
             date.h \
-            calendarexception.h
+            calendarexception.h \
+    threadtime.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

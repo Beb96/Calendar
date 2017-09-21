@@ -10,8 +10,7 @@ ui(new Ui::MainWindow)
     try {
         gc = new GregorianCalendar();
         if (gc == nullptr) {
-            delete gc;
-            throw CalendarException("Errore! Puntatore non inizializato ");
+            throw CalendarException("Errore! Il puntatore non è stato inizializato ");
         }
     }
     catch (CalendarException& err) {
@@ -22,31 +21,44 @@ ui(new Ui::MainWindow)
     try {
         time = new Timer();
         if (time == nullptr) {
-            delete gc;
-            delete time;
-            throw CalendarException("Errore! Puntatore non inizializzato ");
+            throw CalendarException("Errore! Il puntatore non è stato inizializzato ");
         }
     }
     catch (CalendarException& err) {
         err.print_error();
     }
 
-    ui->lcdNumber_Minutes->display(time->getMinute()); //Mostra a display l'ora
-    ui->lcdNumber_Hour->display(time->getHour()); // Mostra a display i minuti
+    //Mostra a display l'ora
+    ViewMinute(time->getMinute());
+    // Mostra a display i minuti
+    ViewHour(time->getHour());
 
-    tempo = std::thread(&MainWindow::ViewTime, this); //lancio del thread per lo scorrere del tempo
+    //Inizializzazione del thread
+    time_thread = new ThreadTime(this);
 
-    ui->comboBox_Month->addItems(gc->getListMonth()); // Crea la lista dei mesi sulla comboBox
+    // Connesione per l'invocazione dei metodi quando viene emesso il segnale dal thread
+    connect(time_thread, SIGNAL(MinuteChanged(int)), this, SLOT(ViewMinute(int)));
+    connect(time_thread, SIGNAL(HourChanged(int)), this, SLOT(ViewHour(int)));
 
-    ui->comboBox_Month->setCurrentText(gc->getCurrentMonth()); //Imposta come mese iniziale all'apertura del programma
-                                                           // il mese attuale
-    ui->comboBox_Year->addItems(gc->getListYear()); // Crea la lista degli anni sulla comboBox
+    // Inizio esecuzione del thread
+    time_thread->start();
 
-    ui->lcdNumber_firstYear->display(gc->getFirstYear()); //Mostra a display l'anno più piccola della lista
-    ui->lcdNumber_LastYear->display(gc->getLastYear()); //Mostra a display l'anno più grande della lista
+    // Crea la lista dei mesi sulla comboBox
+    ui->comboBox_Month->addItems(gc->getListMonth());
 
-    ui->comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear())); //Imposta come anno iniziale all'
-                                                //apertura del programma l'anno attuale
+    //Imposta come mese iniziale all'apertura del programma il mese attuale
+    ui->comboBox_Month->setCurrentText(gc->getCurrentMonth());
+
+    // Crea la lista degli anni sulla comboBox
+    ui->comboBox_Year->addItems(gc->getListYear());
+
+    //Imposta come anno iniziale all'apertura del programma l'anno attuale
+    ui->comboBox_Year->setCurrentText(QString::number(gc->getCurrentYear()));
+
+    //Mostra a display l'anno più piccola della lista
+    ui->lcdNumber_firstYear->display(gc->getFirstYear());
+    //Mostra a display l'anno più grande della lista
+    ui->lcdNumber_LastYear->display(gc->getLastYear());
 
     // Costruzione della tabella per la visualizzazione dei giorni
     ui->tableWidget_Day->setRowCount(6);
@@ -68,39 +80,15 @@ ui(new Ui::MainWindow)
     connect(ui->pushButton_DecrementFirstYear, SIGNAL(clicked()), this, SLOT(DecrementFirstYear()));
     connect(ui->pushButton_IncreaseLastYear, SIGNAL(clicked()), this, SLOT(IncreaseLastYear()));
     connect(ui->pushButton_DecrementLastYear, SIGNAL(clicked()), this, SLOT(DecrementLastYear()));
+    connect(ui->pushButton_Close, SIGNAL(clicked()), this, SLOT(CloseProgram()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    tempo.join();
     delete gc;
     delete time;
-}
-
-// Metodo loop per la visualizzazione dello scorrere del tempo.
-void MainWindow::ViewTime() {
-    int init = 0;
-    int zero_minute = 0;
-    do
-    {
-        do
-        {
-          if (init == 1)
-              time->Wait(60);
-          else {
-              time->Wait(60 - time->getSecond());
-              init = 1;
-          }
-          time->setMinute();
-          if (time->getMinute() == 0)
-              zero_minute = 1;
-          ui->lcdNumber_Minutes->display(time->getMinute());
-        } while (zero_minute == 0);
-        ui->lcdNumber_Minutes->display(time->getMinute());
-        ui->lcdNumber_Hour->display(time->getHour());
-        zero_minute = 0;
-    } while(time->getHour() <= 24);
+    delete time_thread;
 }
 
 // Metodo per la visualizzazione dei giorni sul tableWidget
@@ -241,4 +229,24 @@ void MainWindow::ChangeMonth() {
     }
 
     ViewDay();
+}
+
+// Metodo per la visualizzazione su display dei minuti
+void MainWindow::ViewMinute(int minute) {
+    ui->lcdNumber_Minutes->display(minute);
+}
+
+// Metodo per la visualizzazione su display dell'ora
+void MainWindow::ViewHour(int hour) {
+    ui->lcdNumber_Hour->display(hour);
+}
+
+/* Metodo per la chiusura del programma
+ * Imposto il valore booleano a true in modo che il metodo per lo scorrere del tempo venga bloccato
+ * Aspetto 3 secondi per la chiusura del programma siccome occorre 1 secondo affinchè il thread si blocchi
+ */
+void MainWindow::CloseProgram() {
+    time_thread->stop = true;
+    time->Wait(3);
+    close();
 }

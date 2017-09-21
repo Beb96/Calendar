@@ -10,14 +10,12 @@ class Timer : public Date
 public:
     Timer() {
         CurrentDate();
-        hour = getDate->tm_hour;
-        minute = getDate->tm_min;
-        second = getDate->tm_sec;
+        hour = getInitHour();
+        minute = getInitMinute();
+        second = getInitSecond();
     }
 
     virtual ~Timer() { }
-
-    virtual void CurrentDate() override; // Metodo che permette di ottenere i valori dell'ora, minuti e secondi
 
     // Metodo che ritorna il valore dell'ora attuale
     int getHour() const;

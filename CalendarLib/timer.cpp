@@ -1,11 +1,5 @@
 #include "timer.h"
 
-// Metodo che permette di ottenere ora, minuti e secondi attuali dal sistema operativo
-void Timer::CurrentDate() {
-    time(&date);
-    getDate = localtime(&date);
-}
-
 // Metodo che ritorna il valore dell'ora attuale
 int Timer::getHour() const {
     return hour;
